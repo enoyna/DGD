@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(DGD VERSION 0.1.0)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+if(APPLE)
+  # SET(GUI_TYPE MACOSX_BUNDLE)
+  include_directories(include /usr/local/include)
+  link_directories(lib /usr/local/lib)
+  find_library(SDL2_LIB SDL2)
+  find_library(SDL2_IMAGE_LIB SDL2_image)
+  find_library(SDL2_TTF_LIB SDL2_ttf)
+  find_library(SDL2_MIXER_LIB SDL2_mixer)
+  mark_as_advanced(SDL2_LIB SDL2_IMAGE_LIB SDL2_TTF_LIB SDL2_MIXER_LIB)
+  set(FRAMEWORK "-framework SDL2")
+endif(APPLE)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_THREAD_SAFE")
+set(SOURCES main.cpp src/display.cpp src/errors.cpp)
+set(HEADER_FILES include/display.h include/errors.h)
+
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADER_FILES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIB})
+target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
+target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIB})
+target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIB})
+target_link_libraries(${PROJECT_NAME} ${FRAMEWORK})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+include(CTest)
+enable_testing()
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
