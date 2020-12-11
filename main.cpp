@@ -3,6 +3,8 @@
 #include "display.h"
 #include "errors.h"
 
+#undef main
+
 int main(int, char **) {
     try {
         SDL sdl(SDL_INIT_VIDEO | SDL_INIT_TIMER);
