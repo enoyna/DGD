@@ -1,8 +1,8 @@
 #include "display.h"
 #include "errors.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_events.h>
+#include <SDL.h>
+#include <SDL_events.h>
 
 #include <exception>
 #include <iostream>
