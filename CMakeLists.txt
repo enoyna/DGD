@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(DGD VERSION 0.1.0)
 
+# set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR})
 
@@ -46,6 +47,11 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIB})
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PROJECT_SOURCE_DIR}/lib/SDL2.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 include(CTest)
 enable_testing()
