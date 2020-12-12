@@ -1,9 +1,9 @@
+#define SDL_MAIN_HANDLED
+
 #include <iostream>
 
 #include "display.h"
 #include "errors.h"
-
-#undef main
 
 int main(int, char **) {
     try {
