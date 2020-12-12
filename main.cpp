@@ -7,7 +7,7 @@
 
 int main(int, char **) {
     try {
-        SDL sdl(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+        Display sdl(SDL_INIT_VIDEO | SDL_INIT_TIMER);
         bool running = true;
         SDL_Event e;
         while (running) {

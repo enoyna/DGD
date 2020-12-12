@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-SDL::SDL(Uint32 flags) {
+Display::Display(Uint32 flags = SDL_INIT_EVERYTHING) {
     if (SDL_Init(flags) != 0) throw InitError();
 
     if (SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_SHOWN, &m_window,
@@ -16,13 +16,13 @@ SDL::SDL(Uint32 flags) {
         throw InitError();
 }
 
-SDL::~SDL() {
+Display::~Display() {
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
     SDL_Quit();
 }
 
-void SDL::draw() {
+void Display::draw() {
     // Clear the window with a black background
     SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
     SDL_RenderClear(m_renderer);
