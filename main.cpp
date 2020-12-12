@@ -3,7 +3,7 @@
 #include "display.h"
 #include "errors.h"
 
-#undef main
+#define SDL_MAIN_HANDLED
 
 int main(int, char **) {
     try {
