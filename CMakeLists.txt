@@ -45,10 +45,14 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIB})
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/lib/SDL2.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+if(MINGW)
+  add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND
+      ${CMAKE_COMMAND} -E copy_if_different
+      "${PROJECT_SOURCE_DIR}/lib/SDL2.dll" $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+endif(MINGW)
 
 include(CTest)
 enable_testing()
