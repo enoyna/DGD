@@ -5,7 +5,7 @@ class Display {
     SDL_Renderer *m_renderer;
 
    public:
-    Display(Uint32 flags = 0);
+    Display(Uint32 flags = SDL_INIT_EVERYTHING);
     virtual ~Display();
     void draw();
 };
