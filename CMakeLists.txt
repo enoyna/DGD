@@ -39,11 +39,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_THREAD_SAFE")
 set(SOURCES main.cpp src/display.cpp src/errors.cpp)
 set(HEADER_FILES include/display.h include/errors.h)
 
+add_subdirectory(3rd-party/spdlog)
+find_package(spdlog)
+
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIB})
+target_link_libraries(${PROJECT_NAME} spdlog)
 
 if(MINGW)
   add_custom_command(

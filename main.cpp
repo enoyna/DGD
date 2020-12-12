@@ -1,11 +1,13 @@
 #define SDL_MAIN_HANDLED
 
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 #include "display.h"
 #include "errors.h"
 
 int main(int, char **) {
+    spdlog::info("OK, now we are on.");
     try {
         Display sdl(SDL_INIT_VIDEO | SDL_INIT_TIMER);
         bool running = true;
@@ -19,6 +21,7 @@ int main(int, char **) {
             }
         }
         std::cout << "Good going go" << std::endl;
+        spdlog::warn("Gone.");
         return 0;
     } catch (const InitError &err) {
         std::cerr << "Error while initializing SDL:  " << err.what()
