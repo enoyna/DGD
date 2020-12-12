@@ -1,7 +1,7 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
 
-# Created by https://www.toptal.com/developers/gitignore/api/zsh,vscode,visualstudiocode,vim,osx,macos,cmake,c++,c,visualstudio,vs
-# Edit at https://www.toptal.com/developers/gitignore?templates=zsh,vscode,visualstudiocode,vim,osx,macos,cmake,c++,c,visualstudio,vs
+# Created by https://www.toptal.com/developers/gitignore/api/zsh,vs,visualstudiocode,visualstudio,vim,osx,macos,cmake,c++,c
+# Edit at https://www.toptal.com/developers/gitignore?templates=zsh,vs,visualstudiocode,visualstudio,vim,osx,macos,cmake,c++,c
 
 ### C ###
 # Prerequisites
@@ -93,8 +93,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
-
-[Bb]uild
 
 ### CMake Patch ###
 # External projects
@@ -522,10 +520,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-### vscode ###
-!.vscode/settings.json
-!.vscode/extensions.json
-
 ### Zsh ###
 # Zsh compiled script + zrecompile backup
 *.zwc
@@ -714,7 +708,8 @@ zsdoc/data
 
 # Ionide (cross platform F# VS Code tools) working folder
 
-# End of https://www.toptal.com/developers/gitignore/api/zsh,vscode,visualstudiocode,vim,osx,macos,cmake,c++,c,visualstudio,vs
+# End of https://www.toptal.com/developers/gitignore/api/zsh,vs,visualstudiocode,visualstudio,vim,osx,macos,cmake,c++,c
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
+[Bb]uild
