@@ -1,11 +1,11 @@
 #include <SDL.h>
 
-class SDL {
+class Display {
     SDL_Window *m_window;
     SDL_Renderer *m_renderer;
 
    public:
-    SDL(Uint32 flags = 0);
-    virtual ~SDL();
+    Display(Uint32 flags = SDL_INIT_EVERYTHING);
+    virtual ~Display();
     void draw();
 };

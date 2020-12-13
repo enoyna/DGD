@@ -26,6 +26,11 @@ if(MINGW)
   endif()
   include_directories(include $ENV{SDL2_INCLUDE})
 endif(MINGW)
+if(UNIX)
+  message(STATUS "Building on Unix")
+  find_package(SDL2 REQUIRED)
+  include_directories(include ${SDL2_INCLUDE_DIRS})
+endif(UNIX)
 
 link_directories(lib)
 find_library(SDL2_LIB SDL2)
@@ -39,11 +44,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_THREAD_SAFE")
 set(SOURCES main.cpp src/display.cpp src/errors.cpp)
 set(HEADER_FILES include/display.h include/errors.h)
 
+add_subdirectory(3rd-party/spdlog)
+find_package(spdlog)
+
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIB})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIB})
+target_link_libraries(${PROJECT_NAME} spdlog)
 
 if(MINGW)
   add_custom_command(
