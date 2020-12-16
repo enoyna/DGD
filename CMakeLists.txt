@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.12)
 project(DGD VERSION 0.1.0)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -42,8 +42,8 @@ mark_as_advanced(SDL2_LIB SDL2_IMAGE_LIB SDL2_TTF_LIB SDL2_MIXER_LIB)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_THREAD_SAFE")
-set(SOURCES main.cpp src/display.cpp src/errors.cpp)
-set(HEADER_FILES include/display.h include/errors.h)
+file(GLOB HEADER_FILES CONFIGURE_DEPENDS "include/*.h")
+file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.cpp" "main.cpp")
 
 add_subdirectory(3rd-party/spdlog)
 find_package(spdlog REQUIRED)
