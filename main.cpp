@@ -2,14 +2,38 @@
 
 #include <iostream>
 #include <spdlog/spdlog.h>
+#include <libconfig.h++>
 
 #include "display.h"
 #include "errors.h"
 
+using namespace libconfig;
+
 int main(int, char **) {
+    Config cfg;
+    try {
+        cfg.readFile("settings.cfg");
+    } catch (const FileIOException &fioex) {
+        std::cerr << "I/O error while reading file." << std::endl;
+        return (EXIT_FAILURE);
+    } catch (const ParseException &pex) {
+        std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine()
+                  << " - " << pex.getError() << std::endl;
+        return (EXIT_FAILURE);
+    }
+    const Setting &root = cfg.getRoot();
+    // Output a list of all books in the inventory.
+    try {
+        int abc;
+        if (root.lookupValue("abc", abc)) {
+            std::cout << abc << std::endl;
+        }
+    } catch (const SettingNotFoundException &nfex) {
+        // Ignore.
+    }
     spdlog::info("OK, now we are on.");
     try {
-        Display sdl(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+        Display sdl("Nice");
         bool running = true;
         SDL_Event e;
         while (running) {
