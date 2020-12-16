@@ -42,10 +42,10 @@ void Display::draw() {
 }
 
 bool Display::add_image(std::string path) {
-    spdlog::info("Start loading image %s", path.c_str());
+    spdlog::info("Start loading image {0}", path.c_str());
     SDL_Surface* loaded_surface = IMG_Load(path.c_str());
     if (loaded_surface == nullptr) {
-        spdlog::error("Unable to load image %s! SDL_image Error: %s\n",
+        spdlog::error("Unable to load image {0}! SDL_image Error: {1}",
                       path.c_str(), IMG_GetError());
         return false;
     } else {

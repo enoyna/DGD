@@ -6,30 +6,19 @@
 
 #include "display.h"
 #include "errors.h"
+#include "conf.h"
 
 using namespace libconfig;
 
 int main(int, char **) {
-    Config cfg;
-    try {
-        cfg.readFile("settings.cfg");
-    } catch (const FileIOException &fioex) {
-        std::cerr << "I/O error while reading file." << std::endl;
-        return (EXIT_FAILURE);
-    } catch (const ParseException &pex) {
-        std::cerr << "Parse error at " << pex.getFile() << ":" << pex.getLine()
-                  << " - " << pex.getError() << std::endl;
-        return (EXIT_FAILURE);
-    }
-    const Setting &root = cfg.getRoot();
-    // Output a list of all books in the inventory.
+    ConfigFile c_file("settings.cfg");
     try {
         int abc;
-        if (root.lookupValue("abc", abc)) {
-            std::cout << abc << std::endl;
+        if (c_file.root().lookupValue("abc", abc)) {
+            spdlog::info("Settings abc: {0}", abc);
         }
     } catch (const SettingNotFoundException &nfex) {
-        // Ignore.
+        spdlog::error("Setting not found.");
     }
     spdlog::info("OK, now we are on.");
     try {
@@ -45,13 +34,10 @@ int main(int, char **) {
                 }
             }
         }
-        std::cout << "Good going go" << std::endl;
         spdlog::warn("Gone.");
-        return 0;
     } catch (const InitError &err) {
-        std::cerr << "Error while initializing SDL:  " << err.what()
-                  << std::endl;
+        spdlog::error("Error while initializing SDL: {0}", err.what());
+        return 1;
     }
-
-    return 1;
+    return 0;
 }
