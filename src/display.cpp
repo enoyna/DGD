@@ -8,12 +8,13 @@
 #include <iostream>
 #include <string>
 
-Display::Display(Uint32 flags) {
+Display::Display(const char* window_name, Uint32 flags) {
     if (SDL_Init(flags) != 0) throw InitError();
 
     if (SDL_CreateWindowAndRenderer(640, 480, SDL_WINDOW_SHOWN, &m_window,
                                     &m_renderer) != 0)
         throw InitError();
+    SDL_SetWindowTitle(m_window, window_name);
 }
 
 Display::~Display() {
