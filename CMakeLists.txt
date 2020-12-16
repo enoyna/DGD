@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(DGD VERSION 0.1.0)
+project(DGD VERSION 0.2.2)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
