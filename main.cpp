@@ -33,11 +33,12 @@ int main(int, char **) {
     }
     spdlog::info("OK, now we are on.");
     try {
-        Display sdl("Nice");
+        Display disp("Nice");
         bool running = true;
         SDL_Event e;
+        disp.add_image("descriptions/Blank_state_map.png");
         while (running) {
-            sdl.draw();
+            disp.draw();
             while (SDL_PollEvent(&e) != 0) {
                 if (e.type == SDL_QUIT) {
                     running = false;

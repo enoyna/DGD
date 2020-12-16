@@ -3,6 +3,9 @@
 
 #include <SDL.h>
 #include <SDL_events.h>
+#include <SDL_image.h>
+
+#include <spdlog/spdlog.h>
 
 #include <exception>
 #include <iostream>
@@ -15,6 +18,8 @@ Display::Display(const char* window_name, Uint32 flags) {
                                     &m_renderer) != 0)
         throw InitError();
     SDL_SetWindowTitle(m_window, window_name);
+    int img_flags = IMG_INIT_JPG | IMG_INIT_PNG;
+    if (!(IMG_Init(img_flags) & img_flags)) throw InitError();
 }
 
 Display::~Display() {
@@ -28,30 +33,25 @@ void Display::draw() {
     SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
     SDL_RenderClear(m_renderer);
 
+    for (auto& texture : m_textures) {
+        SDL_RenderCopy(m_renderer, texture, NULL, NULL);
+    }
+
     // Show the window
     SDL_RenderPresent(m_renderer);
+}
 
-    int rgb[] = {
-        203, 203, 203,  // Gray
-        254, 254, 31,   // Yellow
-        0,   255, 255,  // Cyan
-        0,   254, 30,   // Green
-        255, 16,  253,  // Magenta
-        253, 3,   2,    // Red
-        18,  14,  252,  // Blue
-        0,   0,   0     // Black
-    };
-
-    SDL_Rect colorBar;
-    colorBar.x = 0;
-    colorBar.y = 0;
-    colorBar.w = 80;
-    colorBar.h = 480;
-
-    for (int i = 0; i != sizeof rgb / sizeof *rgb; i += 3, colorBar.x += 90) {
-        SDL_SetRenderDrawColor(m_renderer, rgb[i], rgb[i + 1], rgb[i + 2], 255);
-        SDL_RenderFillRect(m_renderer, &colorBar);
-        SDL_RenderPresent(m_renderer);
-        // SDL_Delay(5);
+bool Display::add_image(std::string path) {
+    spdlog::info("Start loading image %s", path.c_str());
+    SDL_Surface* loaded_surface = IMG_Load(path.c_str());
+    if (loaded_surface == nullptr) {
+        spdlog::error("Unable to load image %s! SDL_image Error: %s\n",
+                      path.c_str(), IMG_GetError());
+        return false;
+    } else {
+        m_textures.push_back(
+            SDL_CreateTextureFromSurface(m_renderer, loaded_surface));
+        SDL_FreeSurface(loaded_surface);
     }
+    return true;
 }
